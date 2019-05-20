@@ -62,22 +62,33 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+% Part 1 - Forward Feed and Cost Function
+a1 = [ones(m, 1) X];
+z2 = a1 * Theta1';
+a2 = [ones(m, 1) sigmoid(z2)];
+a3 = sigmoid(a2 * Theta2'); 
 
+for k = 1 : num_labels
+    Y = (y == k);
+    H = a3(:,k);
+    J = J + (-Y' * log(H) - (1 - Y)' * log(1 - H));
+end
 
+J = J / m;
 
+%this method doesn't use for loop, but submit has error
+%Y = zeros(m, 10);
+%for k = 1 : num_labels
+%    Y(:, k) = (y == k);
+%end
 
+%a1 = [ones(m, 1) X];
+%z2 = a1 * Theta1';
+%a2 = [ones(m, 1) sigmoid(z2)];
+%a3 = sigmoid(a2 * Theta2'); 
 
-
-
-
-
-
-
-
-
-
-
-
+%cost = (-Y .* log(a3)) - ((1 - Y) .* log(1 - a3));
+%J = (1 / m) * sum(cost(:));
 
 
 % -------------------------------------------------------------
