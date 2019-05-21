@@ -14,3 +14,7 @@ my solution of coursera machine learning code assignments
    z2 = a1 * Theta1';
    a2 = [ones(m, 1) sigmoid(z2)];
    ```
+
+## ex4 note
+1. To further consider the checkNNGradients function process, and use it in my own work
+2. The visual of the network, features and loss.
