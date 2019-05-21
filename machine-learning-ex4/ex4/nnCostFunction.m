@@ -63,6 +63,7 @@ Theta2_grad = zeros(size(Theta2));
 %
 
 % Part 1 - Forward Feed and Cost Function
+cost = 0;
 a1 = [ones(m, 1) X];
 z2 = a1 * Theta1';
 a2 = [ones(m, 1) sigmoid(z2)];
@@ -71,10 +72,17 @@ a3 = sigmoid(a2 * Theta2');
 for k = 1 : num_labels
     Y = (y == k);
     H = a3(:,k);
-    J = J + (-Y' * log(H) - (1 - Y)' * log(1 - H));
+    cost = cost + (-Y' * log(H) - (1 - Y)' * log(1 - H));
 end
 
-J = J / m;
+Theta1rmBias = Theta1(:, 2:end);
+Theta2rmBias = Theta2(:, 2:end);
+SqTheta1rmBias = Theta1rmBias.^2;
+SqTheta2rmBias = Theta2rmBias.^2;
+J = cost / m + (sum(SqTheta1rmBias(:)) + sum(SqTheta2rmBias(:))) * lambda / (2 * m);
+%SqTheta1 = Theta1.^2;
+%SqTheta2 = Theta2.^2;
+%J = cost / m + (sum(SqTheta1(:)) + sum(SqTheta2(:)) - sum(SqTheta1(:,1)) - sum(SqTheta2(:,1))) * lambda / (2 * m);
 
 %this method doesn't use for loop, but submit has error
 %Y = zeros(m, 10);
@@ -90,6 +98,37 @@ J = J / m;
 %cost = (-Y .* log(a3)) - ((1 - Y) .* log(1 - a3));
 %J = (1 / m) * sum(cost(:));
 
+% Part 2 - Backpropagation algorithm
+Delta1 = 0;
+Delta2 = 0;
+
+O = zeros(m, 10);
+for k = 1 : num_labels
+    O(:, k) = (y == k);
+end
+
+for i = 1 : m
+    %step 1: set z2, a2, z3, a3
+    a1 = [1; X(i, :)'];
+    z2 = Theta1 * a1;
+    a2 = [1; sigmoid(z2)];
+    z3 = Theta2 * a2;
+    a3 = sigmoid(z3);
+    
+    %step 2: calculate delta3
+    delta3 = a3 - O(i, :)';
+    
+    %step 3: calculate delta2
+    delta2 = (Theta2rmBias' * delta3) .* sigmoidGradient(z2);
+    
+    %step 4: accumulate
+    Delta1 = Delta1 + delta2 * a1';
+    Delta2 = Delta2 + delta3 * a2';
+end
+
+%step 5: Gradient
+Theta1_grad = (1 / m) * Delta1;
+Theta2_grad = (1 / m) * Delta2;
 
 % -------------------------------------------------------------
 
