@@ -20,7 +20,7 @@ my solution of coursera machine learning code assignments
 2. The visual of the network, features and loss.
 
 ## ex5&6 note   
-1. the choice of parameters *(regression is lambda, svm is C and sigma) is important   
+1. the choice of parameters *(regression is lambda, svm is C and sigma)* is important   
     ```code
     C_vec = [0.01 0.03 0.1 0.3 1 3 10 30]';
     sigma_vec = [0.01 0.03 0.1 0.3 1 3 10 30]';
