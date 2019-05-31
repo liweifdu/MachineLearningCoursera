@@ -15,7 +15,7 @@ function centroids = computeCentroids(X, idx, K)
 
 % You need to return the following variables correctly.
 centroids = zeros(K, n);
-Ck = zeros(3, 1);
+Ck = zeros(K, 1);
 
 % ====================== YOUR CODE HERE ======================
 % Instructions: Go over every centroid and compute mean of all points that
@@ -25,6 +25,8 @@ Ck = zeros(3, 1);
 %
 % Note: You can use a for-loop over the centroids to compute this.
 %
+
+%method 1: use for loop
 for i = 1 : m
     centroids(idx(i), :) = centroids(idx(i), :) + X(i, :);
     Ck(idx(i)) = Ck(idx(i)) + 1;
@@ -32,6 +34,10 @@ end
     
 centroids = centroids ./ Ck;
 
+%method 2: use matrix
+%for i=1 :K
+%  centroids(i, :) = mean(X([find(idx == i)], :));
+%end
 
 % =============================================================
 
