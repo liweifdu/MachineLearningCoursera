@@ -27,4 +27,11 @@ my solution of coursera machine learning code assignments
     bst_error_val = intmax;
     ```
     then we can use for loop to update C, sigma and bst_error_val.
+
+## ex7 note
+1. computeCentroids
+    we can use mean function, and find function to search the matrix of input, after match the centrol of every x(i)
+    ```code
+    centroids(i, :) = mean(X([find(idx == i)], :));
+    ```
     
