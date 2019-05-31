@@ -34,4 +34,11 @@ my solution of coursera machine learning code assignments
     ```code
     centroids(i, :) = mean(X([find(idx == i)], :));
     ```
+2. imread
+    in rgb color space, we can read a image by **imread**
+    ```code
+    A = double(imread('bird_small.png'));
+    A = A / 255;
+    X = reshape(A, img_size(1) * img_size(2), 3);
+    ```
     
